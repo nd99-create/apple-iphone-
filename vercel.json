@@ -1,0 +1,15 @@
+{
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/properties.html",
+      "destination": "/shop.html",
+      "permanent": true
+    },
+    {
+      "source": "/property-details.html",
+      "destination": "/shop.html",
+      "permanent": true
+    }
+  ]
+}
