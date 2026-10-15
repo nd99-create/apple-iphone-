@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Secure Checkout | Ruhani Room</title>
+  <meta name="description" content="Enter your delivery details and check out securely with Ruhani Room.">
+  <meta name="theme-color" content="#2b201a">
+  <link rel="icon" type="image/png" href="assets/images/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ruhani.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="announce">Five classic Indian fragrances in incense sticks and dhoop cones</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Ruhani Room home"><img src="assets/images/brand/logo-horizontal-maroon.png" alt="Ruhani" width="931" height="297"></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#fragrances">Fragrances</a>
+      <a href="index.html#ritual">Ritual</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-solid" href="shop.html">Shop incense</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="checkout-page" data-checkout-page>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Home</a> / <a href="cart.html">Basket</a> / Checkout</p>
+      <p class="eyebrow">ALMOST HOME</p>
+      <h1>Delivery, then a little ritual.</h1>
+      <p class="lead">Share where to send your order. You’ll review the total before secure payment.</p>
+      <ol class="checkout-steps" aria-label="Checkout progress">
+        <li class="is-current"><span>1</span> Delivery</li>
+        <li><span>2</span> Payment</li>
+        <li><span>3</span> Confirmation</li>
+      </ol>
+    </div>
+  </section>
+  <section class="section checkout-section">
+    <div class="wrap">
+      <div class="checkout-layout">
+        <form class="delivery-form" data-delivery-form novalidate>
+          <div class="form-heading">
+            <p class="eyebrow">DELIVERY DETAILS</p>
+            <h2>Where should we send it?</h2>
+            <p>Your details are used to arrange delivery and share your order confirmation.</p>
+          </div>
+          <div class="form-grid">
+            <label class="field field-full">Full name
+              <input name="name" autocomplete="name" required maxlength="80">
+            </label>
+            <label class="field">Email address
+              <input name="email" type="email" autocomplete="email" required maxlength="120">
+            </label>
+            <label class="field">Mobile number
+              <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91 98765 43210" required maxlength="16">
+            </label>
+            <label class="field field-full">Address
+              <textarea name="address" rows="3" autocomplete="street-address" required maxlength="240"></textarea>
+            </label>
+            <label class="field">PIN code
+              <input name="postalCode" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{6}" required maxlength="6">
+            </label>
+            <label class="field">City
+              <input name="city" autocomplete="address-level2" required maxlength="80">
+            </label>
+            <label class="field field-full">State
+              <input name="state" autocomplete="address-level1" required maxlength="80">
+            </label>
+          </div>
+          <p class="form-message" data-checkout-message role="status" aria-live="polite"></p>
+          <div class="payment-setup" data-payment-setup role="status" aria-live="polite">
+            <strong>Payments are not connected yet.</strong>
+            <span>You can review your order, but checkout will open as soon as the store’s Razorpay account is configured.</span>
+          </div>
+          <button class="btn btn-solid btn-wide pay-button" type="submit" data-pay-button disabled>Loading secure checkout…</button>
+          <button class="btn btn-line btn-wide" type="button" data-retry-verification hidden>Retry payment confirmation</button>
+          <p class="order-reassurance">You’ll pay securely on Razorpay. Your card or UPI details are never stored on this site.</p>
+          <a class="text-link back-to-basket" href="cart.html">Back to your basket</a>
+        </form>
+        <aside class="order-card checkout-summary" aria-label="Order summary">
+          <p class="eyebrow">YOUR ORDER</p>
+          <h2>Fragrance for home</h2>
+          <div class="checkout-items" data-checkout-items></div>
+          <div class="summary-line"><span>Subtotal</span><strong data-checkout-subtotal>₹0</strong></div>
+          <div class="summary-line"><span>Shipping</span><strong>Free</strong></div>
+          <div class="summary-line summary-total"><span>Total to pay</span><strong data-checkout-total>₹0</strong></div>
+          <p class="order-reassurance">All prices in INR · Free shipping across India</p>
+        </aside>
+      </div>
+      <section class="payment-success" data-payment-success hidden tabindex="-1">
+        <p class="eyebrow">PAYMENT RECEIVED</p>
+        <h2>Your payment is confirmed.</h2>
+          <p>We’ve securely verified your payment. Keep this payment reference for your records.</p>
+        <p class="payment-reference">Payment reference <strong data-payment-reference></strong></p>
+        <a class="btn btn-solid" href="shop.html">Continue browsing</a>
+      </section>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-base">
+      <span>&copy; <span data-year>2026</span> Ruhani Room. All rights reserved.</span>
+      <span>Never leave burning incense unattended.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/catalog.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
