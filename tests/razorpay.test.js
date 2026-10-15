@@ -2,6 +2,7 @@
 
 var assert = require("node:assert/strict");
 var crypto = require("node:crypto");
+var EventEmitter = require("node:events");
 var test = require("node:test");
 var createOrder = require("../api/create-order.js");
 var verifyPayment = require("../api/verify-payment.js");
@@ -28,11 +29,14 @@ function makeResponse() {
 }
 
 function makeRequest(body) {
-  return {
-    method: "POST",
-    headers: { origin: "https://ruhani-room.vercel.app", host: "ruhani-room.vercel.app" },
-    body: body
-  };
+  var request = new EventEmitter();
+  request.method = "POST";
+  request.headers = { origin: "https://ruhani-room.vercel.app", host: "ruhani-room.vercel.app" };
+  process.nextTick(function () {
+    request.emit("data", JSON.stringify(body));
+    request.emit("end");
+  });
+  return request;
 }
 
 function signatureFor(orderId, paymentId, secret) {

@@ -140,7 +140,10 @@
 
   function updateBasketCount() {
     var count = basketCount();
-    $$("[data-basket-count]").forEach(function (element) { element.textContent = String(count); });
+    $$("[data-basket-count]").forEach(function (element) {
+      element.textContent = String(count);
+      element.hidden = count === 0;
+    });
     $$(".basket-nav").forEach(function (link) {
       link.setAttribute("aria-label", "Basket, " + count + (count === 1 ? " item" : " items"));
     });
@@ -148,13 +151,14 @@
 
   function makeBasketNav() {
     var nav = $("#site-nav");
-    if (!nav || $(".basket-nav", nav)) return;
+    var headerWrap = $(".site-header .wrap");
+    if (!nav || !headerWrap || $(".basket-nav", headerWrap)) return;
     var link = document.createElement("a");
     link.className = "basket-nav";
     link.href = "cart.html";
-    link.innerHTML = 'Basket <span class="basket-count" data-basket-count>0</span>';
-    var shopButton = $(".btn", nav);
-    nav.insertBefore(link, shopButton || null);
+    link.setAttribute("aria-label", "Basket, 0 items");
+    link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span class="basket-count" data-basket-count hidden>0</span>';
+    headerWrap.appendChild(link);
   }
 
   function createText(tag, className, text) {
