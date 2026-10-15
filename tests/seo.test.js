@@ -88,12 +88,13 @@ test("Vercel redirects legacy query URLs to clean pages", function () {
   assert.ok(config.redirects.some(function (redirect) {
     return redirect.source === "/product.html" &&
       redirect.destination === "/incense-sticks/prema-rose/" &&
+      redirect.statusCode === 301 &&
       redirect.has.some(function (condition) { return condition.key === "f" && condition.value === "rose"; });
   }));
   assert.ok(config.redirects.some(function (redirect) {
-    return redirect.source === "/shop.html" && redirect.destination === "/dhoop-cones/";
+    return redirect.source === "/shop.html" && redirect.destination === "/dhoop-cones/" && redirect.statusCode === 301;
   }));
   assert.ok(config.redirects.some(function (redirect) {
-    return redirect.source === "/product.html" && redirect.destination === "/shop.html" && !redirect.has;
+    return redirect.source === "/product.html" && redirect.destination === "/shop.html" && redirect.statusCode === 301 && !redirect.has;
   }));
 });

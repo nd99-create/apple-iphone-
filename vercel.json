@@ -9,7 +9,7 @@
         { "type": "query", "key": "f", "value": "rose" }
       ],
       "destination": "/incense-sticks/prema-rose/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -18,7 +18,7 @@
         { "type": "query", "key": "f", "value": "mogra" }
       ],
       "destination": "/incense-sticks/mallika-mogra/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -27,7 +27,7 @@
         { "type": "query", "key": "f", "value": "sandalwood" }
       ],
       "destination": "/incense-sticks/chandana-sandalwood/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -36,7 +36,7 @@
         { "type": "query", "key": "f", "value": "lavender" }
       ],
       "destination": "/incense-sticks/shanti-lavender/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -45,7 +45,7 @@
         { "type": "query", "key": "f", "value": "jasmine" }
       ],
       "destination": "/incense-sticks/saurabha-jasmine/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -54,7 +54,7 @@
         { "type": "query", "key": "f", "value": "rose" }
       ],
       "destination": "/dhoop-cones/smriti-rose/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -63,7 +63,7 @@
         { "type": "query", "key": "f", "value": "mogra" }
       ],
       "destination": "/dhoop-cones/kusuma-mogra/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -72,7 +72,7 @@
         { "type": "query", "key": "f", "value": "sandalwood" }
       ],
       "destination": "/dhoop-cones/dhara-sandalwood/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -81,7 +81,7 @@
         { "type": "query", "key": "f", "value": "lavender" }
       ],
       "destination": "/dhoop-cones/nivriti-lavender/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
@@ -90,45 +90,45 @@
         { "type": "query", "key": "f", "value": "jasmine" }
       ],
       "destination": "/dhoop-cones/prakriti-jasmine/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product.html",
       "destination": "/shop.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/product-havan.html",
       "destination": "/havan-cups/mangala/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/shop.html",
       "has": [{ "type": "query", "key": "type", "value": "sticks" }],
       "destination": "/incense-sticks/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/shop.html",
       "has": [{ "type": "query", "key": "type", "value": "cones" }],
       "destination": "/dhoop-cones/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/shop.html",
       "has": [{ "type": "query", "key": "type", "value": "havan" }],
       "destination": "/havan-cups/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/properties.html",
       "destination": "/shop.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/property-details.html",
       "destination": "/shop.html",
-      "permanent": true
+      "statusCode": 301
     }
   ]
 }
