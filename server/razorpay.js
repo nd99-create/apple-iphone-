@@ -24,9 +24,14 @@ function sendJson(res, status, body) {
 }
 
 function paymentCredentials() {
-  var keyId = process.env.RAZORPAY_KEY_ID;
-  var keySecret = process.env.RAZORPAY_KEY_SECRET;
+  var keyId = cleanCredential(process.env.RAZORPAY_KEY_ID);
+  var keySecret = cleanCredential(process.env.RAZORPAY_KEY_SECRET);
   return keyId && keySecret ? { keyId: keyId, keySecret: keySecret } : null;
+}
+
+function cleanCredential(value) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/^["']+|["']+$/g, "").trim();
 }
 
 function hasSameOrigin(req) {

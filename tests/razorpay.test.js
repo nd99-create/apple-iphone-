@@ -43,6 +43,24 @@ function signatureFor(orderId, paymentId, secret) {
   return crypto.createHmac("sha256", secret).update(orderId + "|" + paymentId).digest("hex");
 }
 
+test("trims whitespace and surrounding quotes from Razorpay credentials", function () {
+  var originalKeyId = process.env.RAZORPAY_KEY_ID;
+  var originalKeySecret = process.env.RAZORPAY_KEY_SECRET;
+  process.env.RAZORPAY_KEY_ID = ' \n"rzp_test_example"\t';
+  process.env.RAZORPAY_KEY_SECRET = " '\ntest-secret \n' ";
+  try {
+    assert.deepEqual(helpers.paymentCredentials(), {
+      keyId: "rzp_test_example",
+      keySecret: "test-secret"
+    });
+  } finally {
+    if (originalKeyId === undefined) delete process.env.RAZORPAY_KEY_ID;
+    else process.env.RAZORPAY_KEY_ID = originalKeyId;
+    if (originalKeySecret === undefined) delete process.env.RAZORPAY_KEY_SECRET;
+    else process.env.RAZORPAY_KEY_SECRET = originalKeySecret;
+  }
+});
+
 test("validates allowlisted basket prices on the server", function () {
   var order = helpers.validateOrder({
     items: [{ id: "sticks-rose", quantity: 2, price: 1 }],
