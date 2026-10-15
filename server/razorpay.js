@@ -1,20 +1,16 @@
 "use strict";
 
 var https = require("node:https");
-
-var CATALOG = {
-  "sticks-rose": { name: "Prema Rose Incense Sticks", price: 200 },
-  "sticks-mogra": { name: "Mallika Mogra Incense Sticks", price: 200 },
-  "sticks-sandalwood": { name: "Chandana Sandalwood Incense Sticks", price: 200 },
-  "sticks-lavender": { name: "Shanti Lavender Incense Sticks", price: 200 },
-  "sticks-jasmine": { name: "Saurabha Jasmine Incense Sticks", price: 200 },
-  "cones-rose": { name: "Smriti Rose Dhoop Cones", price: 200 },
-  "cones-mogra": { name: "Kusuma Mogra Dhoop Cones", price: 200 },
-  "cones-sandalwood": { name: "Dhara Sandalwood Dhoop Cones", price: 200 },
-  "cones-lavender": { name: "Nivriti Lavender Dhoop Cones", price: 200 },
-  "cones-jasmine": { name: "Prakriti Jasmine Dhoop Cones", price: 200 },
-  "havan-classic": { name: "Mangala Havan Cups (pack of six)", price: 200 }
-};
+var products = require("../assets/js/catalog.js");
+var CATALOG = Object.keys(products).reduce(function (catalog, id) {
+  catalog[id] = {
+    name: products[id].name,
+    price: products[id].price,
+    sku: products[id].sku,
+    contents: (products[id].contents || []).map(function (itemId) { return products[itemId].name; })
+  };
+  return catalog;
+}, Object.create(null));
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -117,7 +113,7 @@ function razorpayRequest(credentials, path, options) {
 }
 
 function validateOrder(body) {
-  if (!body || !Array.isArray(body.items) || body.items.length < 1 || body.items.length > 11) {
+  if (!body || !Array.isArray(body.items) || body.items.length < 1 || body.items.length > Object.keys(CATALOG).length) {
     return { error: "Your basket is empty or invalid. Please review it and try again." };
   }
 
@@ -134,7 +130,8 @@ function validateOrder(body) {
     seen[item.id] = true;
     quantityTotal += item.quantity;
     amount += product.price * item.quantity;
-    lines.push(product.name + " x " + item.quantity);
+    lines.push(product.name + " x " + item.quantity + " [SKU " + product.sku + "]" +
+      (product.contents.length ? " — includes " + product.contents.join(", ") : ""));
   }
   if (quantityTotal > 50 || !Number.isSafeInteger(amount) || amount < 1) {
     return { error: "Your basket exceeds the order limit. Please reduce the quantities and try again." };
@@ -162,8 +159,21 @@ function validateOrder(body) {
     return { error: "Enter a complete delivery address and a valid 6-digit PIN code." };
   }
 
+  if (body.promoCode !== undefined && body.promoCode !== null && typeof body.promoCode !== "string") {
+    return { error: "That discount code is not valid. Please check it and try again." };
+  }
+  var promoCode = typeof body.promoCode === "string" ? body.promoCode.trim().toUpperCase() : "";
+  if (promoCode && promoCode !== "WELCOME5") {
+    return { error: "That discount code is not valid. Please check it and try again." };
+  }
+  var discount = promoCode === "WELCOME5" ? Math.round(amount * 0.05) : 0;
+
   return {
-    amount: amount * 100,
+    amount: (amount - discount) * 100,
+    subtotal: amount,
+    discount: discount,
+    discountAmount: discount,
+    promoCode: promoCode || null,
     items: lines.join(", ").slice(0, 256),
     customer: {
       name: name,

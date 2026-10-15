@@ -47,7 +47,10 @@ module.exports = async function (req, res) {
           city: order.customer.city,
           state: order.customer.state,
           pincode: order.customer.postalCode,
-          items: order.items
+          items: order.items,
+          subtotal_inr: order.subtotal,
+          discount_code: order.promoCode || "",
+          discount_inr: order.discountAmount
         }
       }
     });

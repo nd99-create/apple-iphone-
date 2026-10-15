@@ -9,29 +9,57 @@
   <link rel="icon" type="image/png" href="/assets/images/brand/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/ruhani.css">
 
   <meta name="robots" content="noindex, follow">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="announce">Five classic Indian fragrances in incense sticks and dhoop cones</div>
+<!-- shared-header:start -->
+<div class="announce" aria-label="Store announcement">
+  <div class="announce-track" aria-hidden="true">
+    <span>Hand-finished rituals for a calmer home</span><span>✦</span>
+    <span>Free delivery across India</span><span>✦</span>
+    <span>Five fragrances, made for everyday moments</span><span>✦</span>
+    <span>Hand-finished rituals for a calmer home</span><span>✦</span>
+    <span>Free delivery across India</span><span>✦</span>
+    <span>Five fragrances, made for everyday moments</span><span>✦</span>
+  </div>
+  <span class="announce-static">Hand-finished rituals · Free delivery across India</span>
+</div>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Ruhani Room home"><img src="/assets/images/brand/logo-horizontal-maroon.png" alt="Ruhani" width="931" height="297"></a>
+    <a class="brand" href="/" aria-label="Ruhani Room home"><img src="/assets/images/brand/logo-horizontal-maroon.png" alt="Ruhani Room" width="931" height="297"></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="/">Home</a>
-      <a href="/shop.html">Shop</a>
+      <div class="nav-shop">
+        <a href="/shop.html">Shop</a>
+        <button class="shop-toggle" type="button" aria-expanded="false" aria-label="Open Shop menu">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg>
+        </button>
+        <div class="shop-menu">
+          <a href="/shop.html">Shop all</a>
+          <a href="/incense-sticks/">Incense sticks</a>
+          <a href="/dhoop-cones/">Dhoop cones</a>
+          <a href="/havan-cups/">Havan cups</a>
+          <a href="/diwali-bundles/">Diwali bundles</a>
+        </div>
+      </div>
       <a href="/#fragrances">Fragrances</a>
-      <a href="/#ritual">Ritual</a>
+      <a href="/#experience">Our experience</a>
       <a href="/contact.html">Contact</a>
     </nav>
+    <a class="basket-nav" href="/cart.html" aria-label="Basket, 0 items">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+      <span class="basket-count" data-basket-count hidden>0</span>
+    </a>
   </div>
 </header>
+<!-- shared-header:end -->
 <main id="main" class="checkout-page" data-cart-page>
   <section class="page-head">
     <div class="wrap">
@@ -59,14 +87,49 @@
     </div>
   </section>
 </main>
+<!-- shared-footer:start -->
 <footer class="site-footer">
   <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="/" aria-label="Ruhani Room home"><img src="/assets/images/brand/logo-horizontal-ivory.png" alt="Ruhani Room" width="931" height="297" loading="lazy"></a>
+        <p>Incense, dhoop and havan rituals shaped by the warmth of home. Made for the quiet moments that stay with you.</p>
+      </div>
+      <div>
+        <h2>Shop</h2>
+        <ul>
+          <li><a href="/incense-sticks/">Incense sticks</a></li>
+          <li><a href="/dhoop-cones/">Dhoop cones</a></li>
+          <li><a href="/havan-cups/">Havan cups</a></li>
+          <li><a href="/diwali-bundles/">Diwali bundles</a></li>
+          <li><a href="/shop.html">All products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Discover</h2>
+        <ul>
+          <li><a href="/#fragrances">Five fragrances</a></li>
+          <li><a href="/#experience">The Ruhani experience</a></li>
+          <li><a href="/#ritual">How to light incense</a></li>
+          <li><a href="/contact.html#faq">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>We’re here</h2>
+        <ul>
+          <li><a href="/contact.html">Contact us</a></li>
+          <li><a href="/contact.html">Gifting and bulk orders</a></li>
+          <li><a data-email href="mailto:support@ruhaniroom.com">support@ruhaniroom.com</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="foot-base">
       <span>&copy; <span data-year>2026</span> Ruhani Room. All rights reserved.</span>
       <span>Never leave burning incense unattended.</span>
     </div>
   </div>
 </footer>
+<!-- shared-footer:end -->
 <script src="/assets/js/catalog.js" defer></script>
 <script src="/assets/js/main.js" defer></script>
 </body>

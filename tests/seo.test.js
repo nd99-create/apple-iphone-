@@ -9,7 +9,7 @@ var siteConfig = require("../scripts/site-config.js");
 var root = path.resolve(__dirname, "..");
 
 test("indexable pages have unique metadata and root-relative assets", function () {
-  var paths = ["/", "/shop.html", "/contact.html", "/incense-sticks/", "/dhoop-cones/", "/havan-cups/"]
+  var paths = ["/", "/shop.html", "/contact.html", "/incense-sticks/", "/dhoop-cones/", "/havan-cups/", "/diwali-bundles/"]
     .concat(Object.keys(catalog).map(function (id) { return catalog[id].href; }));
   var titles = new Set();
   paths.forEach(function (url) {
@@ -25,6 +25,10 @@ test("indexable pages have unique metadata and root-relative assets", function (
     assert.ok(description && description.length >= 140 && description.length <= 160, url + " has invalid description length");
     assert.equal(h1Count, 1, url + " must have exactly one H1");
     assert.match(html, /<html lang="en-IN">/);
+    assert.match(html, /shared-header:start/);
+    assert.match(html, /shared-footer:start/);
+    assert.match(html, /class="basket-nav"[^>]*aria-label="Basket/);
+    assert.doesNotMatch(html, />Basket<\/a>/);
     assert.ok(html.includes('<link rel="canonical" href="' + siteConfig.SITE_URL + url + '">'));
     for (var asset of html.matchAll(/(?:src|href)="(\/assets\/[^"#?]+)"/g)) {
       assert.equal(fs.existsSync(path.join(root, asset[1].slice(1))), true, url + " references missing " + asset[1]);
@@ -42,8 +46,17 @@ test("indexable pages have unique metadata and root-relative assets", function (
 });
 
 test("all catalog products have a static, indexable clean URL", function () {
+  var existingIds = [
+    "sticks-rose", "sticks-mogra", "sticks-sandalwood", "sticks-lavender", "sticks-jasmine",
+    "cones-rose", "cones-mogra", "cones-sandalwood", "cones-lavender", "cones-jasmine", "havan-classic"
+  ];
+  var skus = new Set();
+  existingIds.forEach(function (id) { assert.ok(catalog[id], id + " catalog ID must remain unchanged"); });
   Object.keys(catalog).forEach(function (id) {
     var product = catalog[id];
+    assert.ok(product.sku, id + " must have a SKU");
+    assert.ok(!skus.has(product.sku), "Duplicate SKU: " + product.sku);
+    skus.add(product.sku);
     var file = path.join(root, product.href.slice(1), "index.html");
     assert.equal(fs.existsSync(file), true, id + " page is missing");
     var html = fs.readFileSync(file, "utf8");
@@ -58,7 +71,7 @@ test("all catalog products have a static, indexable clean URL", function () {
     var graph = scripts.map(function (match) { return JSON.parse(match[1]); })
       .find(function (value) { return Array.isArray(value["@graph"]); });
     assert.ok(graph, id + " page has no JSON-LD graph");
-    var productSchema = graph["@graph"].find(function (entry) { return entry["@type"] === "Product" && entry.sku === id; });
+    var productSchema = graph["@graph"].find(function (entry) { return entry["@type"] === "Product" && entry.sku === catalog[id].sku; });
     assert.ok(productSchema);
     assert.equal(productSchema.offers.price, catalog[id].price.toFixed(2));
     assert.equal(productSchema.offers.shippingDetails.shippingRate.value, "0.00");
@@ -68,18 +81,26 @@ test("all catalog products have a static, indexable clean URL", function () {
 });
 
 test("category pages, sitemap and crawler exclusions are present", function () {
-  ["/incense-sticks/", "/dhoop-cones/", "/havan-cups/"].forEach(function (slug) {
+  ["/incense-sticks/", "/dhoop-cones/", "/havan-cups/", "/diwali-bundles/"].forEach(function (slug) {
     var file = path.join(root, slug.slice(1), "index.html");
     assert.equal(fs.existsSync(file), true, slug + " category page is missing");
     assert.match(fs.readFileSync(file, "utf8"), /"@type":"CollectionPage"/);
   });
   var sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
   assert.match(sitemap, new RegExp(siteConfig.SITE_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "/incense-sticks/prema-rose/"));
-  assert.equal((sitemap.match(/<url>/g) || []).length, 17);
+  assert.equal((sitemap.match(/<url>/g) || []).length, 21);
   assert.doesNotMatch(sitemap, /\/(?:cart|checkout)\.html/);
   var robots = fs.readFileSync(path.join(root, "robots.txt"), "utf8");
   assert.match(robots, /Disallow: \/api\//);
   assert.ok(robots.includes("Sitemap: " + siteConfig.SITE_URL + "/sitemap.xml"));
+});
+
+test("FAQ content and structured data appear on Contact, not the homepage", function () {
+  var home = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  var contact = fs.readFileSync(path.join(root, "contact.html"), "utf8");
+  assert.doesNotMatch(home, /id="faq"|FAQPage/);
+  assert.match(contact, /id="faq"/);
+  assert.match(contact, /"@type":"FAQPage"/);
 });
 
 test("Vercel redirects legacy query URLs to clean pages", function () {

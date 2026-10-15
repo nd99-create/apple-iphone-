@@ -4,7 +4,7 @@
   "use strict";
 
   /* ---- Settings: edit these ---- */
-  var CONTACT_EMAIL = "hello@ruhaniroom.com";
+  var CONTACT_EMAIL = "support@ruhaniroom.com";
   // WhatsApp number with country code, digits only, e.g. "919876543210".
   // Leave empty to hide the WhatsApp line on the contact page.
   var WHATSAPP_NUMBER = "";
@@ -59,6 +59,7 @@
   var PRODUCTS = window.RUHANI_PRODUCTS;
   var basket = {};
   var basketNotice = null;
+  var promoCode = "";
   var money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 
   function announceBasket(message) {
@@ -245,8 +246,13 @@
       line.appendChild(createText("strong", "", money.format(product.price * basket[id])));
       container.appendChild(line);
     });
-    var total = money.format(basketTotal());
-    $$("[data-checkout-subtotal], [data-checkout-total]").forEach(function (element) { element.textContent = total; });
+    var subtotal = basketTotal();
+    var discount = promoCode === "WELCOME5" ? Math.round(subtotal * 0.05) : 0;
+    var total = money.format(subtotal - discount);
+    $$("[data-checkout-subtotal]").forEach(function (element) { element.textContent = money.format(subtotal); });
+    $$("[data-checkout-total]").forEach(function (element) { element.textContent = total; });
+    $$("[data-checkout-discount]").forEach(function (element) { element.textContent = "−" + money.format(discount); });
+    $$("[data-checkout-discount-row]").forEach(function (element) { element.hidden = discount === 0; });
   }
 
   function addToBasket(id, quantity) {
@@ -328,6 +334,51 @@
     $$("#site-nav a").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
     window.matchMedia("(min-width: 901px)").addEventListener("change", function (m) { if (m.matches) setMenu(false); });
   }
+  var shopNav = $(".nav-shop");
+  var shopToggle = $(".shop-toggle");
+  if (shopNav && shopToggle) {
+    var setShopMenu = function (open) {
+      shopNav.classList.toggle("is-open", open);
+      shopToggle.setAttribute("aria-expanded", String(open));
+      shopToggle.setAttribute("aria-label", open ? "Close Shop menu" : "Open Shop menu");
+    };
+    shopToggle.addEventListener("click", function () {
+      setShopMenu(window.matchMedia("(min-width: 901px)").matches || !shopNav.classList.contains("is-open"));
+    });
+    shopNav.addEventListener("pointerenter", function () {
+      if (window.matchMedia("(min-width: 901px)").matches) setShopMenu(true);
+    });
+    shopNav.addEventListener("pointerleave", function () {
+      if (window.matchMedia("(min-width: 901px)").matches && !shopNav.contains(document.activeElement)) {
+        setShopMenu(false);
+      }
+    });
+    shopNav.addEventListener("focusin", function (event) {
+      if (event.target !== shopToggle) setShopMenu(true);
+    });
+    shopNav.addEventListener("focusout", function (event) {
+      if (!shopNav.contains(event.relatedTarget)) setShopMenu(false);
+    });
+    document.addEventListener("click", function (event) {
+      if (!shopNav.contains(event.target)) setShopMenu(false);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && shopNav.classList.contains("is-open")) {
+        setShopMenu(false);
+        shopToggle.focus();
+      }
+    });
+    $$(".shop-menu a").forEach(function (link) {
+      link.addEventListener("click", function () { setShopMenu(false); });
+    });
+  }
+  var currentPath = window.location.pathname;
+  $$("#site-nav > a, #site-nav .nav-shop > a").forEach(function (link) {
+    var href = link.getAttribute("href");
+    if (href === currentPath || (href === "/shop.html" && /^\/(incense-sticks|dhoop-cones|havan-cups|diwali-bundles)\//.test(currentPath))) {
+      link.setAttribute("aria-current", "page");
+    }
+  });
 
   /* ---- Fragrance tabs (home) ---- */
   var tablist = $(".scent-tabs");
@@ -465,11 +516,54 @@
 
     function updatePaymentButton() {
       if (!paymentButton) return;
+      var discount = promoCode === "WELCOME5" ? Math.round(basketTotal() * 0.05) : 0;
       paymentButton.disabled = checkoutBusy || !checkoutEnabled || !basketCount() || Boolean(pendingPayment);
       paymentButton.textContent = checkoutBusy ? (pendingPayment ? "Confirming payment…" : "Preparing secure payment…") :
         pendingPayment ? "Payment confirmation needed" :
-          checkoutEnabled ? "Pay " + money.format(basketTotal()) + " securely" : "Secure payment unavailable";
+          checkoutEnabled ? "Pay " + money.format(basketTotal() - discount) + " securely" : "Secure payment unavailable";
     }
+
+    var promoInput = $("[data-promo-input]");
+    var promoFeedback = $("[data-promo-feedback]");
+    function setPromoFeedback(message, isError) {
+      if (!promoFeedback) return;
+      promoFeedback.textContent = message;
+      promoFeedback.classList.toggle("is-error", Boolean(isError));
+    }
+    function applyPromo() {
+      var requestedCode = promoInput ? promoInput.value.trim().toUpperCase() : "";
+      if (requestedCode !== "WELCOME5") {
+        promoCode = "";
+        setPromoFeedback("Enter WELCOME5 to receive 5% off.", true);
+      } else if (!basketCount()) {
+        promoCode = "";
+        setPromoFeedback("Add a product before applying a discount code.", true);
+      } else {
+        promoCode = requestedCode;
+        promoInput.value = requestedCode;
+        setPromoFeedback("WELCOME5 applied — 5% off your order.", false);
+      }
+      renderCheckoutSummary();
+      updatePaymentButton();
+    }
+    if (promoInput) {
+      promoInput.addEventListener("input", function () {
+        if (promoCode && promoInput.value.trim().toUpperCase() !== promoCode) {
+          promoCode = "";
+          setPromoFeedback("Apply the code again to use your discount.", false);
+          renderCheckoutSummary();
+          updatePaymentButton();
+        }
+      });
+      promoInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          applyPromo();
+        }
+      });
+    }
+    var promoButton = $("[data-apply-promo]");
+    if (promoButton) promoButton.addEventListener("click", applyPromo);
 
     fetch("/api/payment-config", { headers: { Accept: "application/json" } })
       .then(function (response) {
@@ -529,6 +623,7 @@
         }
         pendingPayment = null;
         basket = {};
+        promoCode = "";
         saveBasket();
         updateBasketCount();
         renderCartPage();
@@ -542,7 +637,7 @@
         setCheckoutMessage("", false);
       } catch (error) {
         console.error("Payment confirmation needs attention:", error.message);
-        setCheckoutMessage(error.message + " Do not pay again yet. Retry confirmation, or contact hello@ruhaniroom.com with payment reference " +
+        setCheckoutMessage(error.message + " Do not pay again yet. Retry confirmation, or contact " + CONTACT_EMAIL + " with payment reference " +
           (payment.razorpay_payment_id || "shown by Razorpay") + ".", true);
         if (retryVerificationButton) retryVerificationButton.hidden = false;
       } finally {
@@ -588,7 +683,8 @@
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
             items: Object.keys(basket).map(function (id) { return { id: id, quantity: basket[id] }; }),
-            customer: customer
+            customer: customer,
+            promoCode: promoCode
           })
         });
         var order = await orderResponse.json();

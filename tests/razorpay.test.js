@@ -72,6 +72,49 @@ test("validates allowlisted basket prices on the server", function () {
   assert.match(order.items, /Rose Incense Sticks x 2/);
 });
 
+test("prices Diwali bundles from the shared catalogue", function () {
+  var order = helpers.validateOrder({
+    items: [{ id: "diwali-deepa", quantity: 1 }],
+    customer: customer,
+    amount: 1
+  });
+
+  assert.equal(order.error, undefined);
+  assert.equal(order.amount, 54900);
+  assert.equal(order.subtotal, 549);
+  assert.match(order.items, /SKU RR-DW-DPA/);
+  assert.match(order.items, /Mangala Havan Cups/);
+});
+
+test("calculates WELCOME5 on the server and ignores client discount amounts", function () {
+  var order = helpers.validateOrder({
+    items: [{ id: "diwali-deepa", quantity: 1 }],
+    customer: customer,
+    promoCode: " welcome5 ",
+    discount: 999999,
+    subtotal: 1
+  });
+
+  assert.equal(order.error, undefined);
+  assert.equal(order.subtotal, 549);
+  assert.equal(order.discountAmount, 27);
+  assert.equal(order.amount, 52200);
+  assert.equal(order.promoCode, "WELCOME5");
+});
+
+test("rejects unknown discount codes instead of silently charging a discounted amount", function () {
+  assert.match(helpers.validateOrder({
+    items: [{ id: "sticks-rose", quantity: 1 }],
+    customer: customer,
+    promoCode: "TAKE100"
+  }).error, /discount code is not valid/);
+  assert.match(helpers.validateOrder({
+    items: [{ id: "sticks-rose", quantity: 1 }],
+    customer: customer,
+    promoCode: 123
+  }).error, /discount code is not valid/);
+});
+
 test("rejects invalid basket items and customer details", function () {
   assert.match(helpers.validateOrder({
     items: [{ id: "unknown-product", quantity: 1 }],
@@ -113,6 +156,42 @@ test("creates a Razorpay order with the server-calculated INR amount", async fun
     assert.equal(requestBody.path, "orders");
     assert.equal(requestBody.body.amount, 20000);
     assert.equal(requestBody.body.currency, "INR");
+  } finally {
+    helpers.readJson = originalReadJson;
+    helpers.hasSameOrigin = originalSameOrigin;
+    helpers.paymentCredentials = originalCredentials;
+    helpers.razorpayRequest = originalRazorpayRequest;
+  }
+});
+
+test("creates a discounted bundle order using the server-calculated amount", async function () {
+  var originalReadJson = helpers.readJson;
+  var originalSameOrigin = helpers.hasSameOrigin;
+  var originalCredentials = helpers.paymentCredentials;
+  var originalRazorpayRequest = helpers.razorpayRequest;
+  var requestBody;
+  helpers.readJson = async function () {
+    return {
+      items: [{ id: "diwali-deepa", quantity: 1 }],
+      customer: customer,
+      promoCode: "WELCOME5",
+      discount: 999999
+    };
+  };
+  helpers.hasSameOrigin = function () { return true; };
+  helpers.paymentCredentials = function () { return { keyId: "rzp_test_example", keySecret: "test-secret" }; };
+  helpers.razorpayRequest = async function (_credentials, _path, options) {
+    requestBody = options.body;
+    return { id: "order_bundle123", amount: 52200, currency: "INR" };
+  };
+
+  try {
+    var response = makeResponse();
+    await createOrder(makeRequest(), response);
+    assert.equal(response.statusCode, 200);
+    assert.equal(requestBody.amount, 52200);
+    assert.equal(requestBody.notes.discount_code, "WELCOME5");
+    assert.equal(requestBody.notes.discount_inr, 27);
   } finally {
     helpers.readJson = originalReadJson;
     helpers.hasSameOrigin = originalSameOrigin;

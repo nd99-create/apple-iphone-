@@ -102,6 +102,36 @@
         { title: "Allow it to cool", text: "Wait until the cup and its contents have cooled completely before handling or disposing of the remains." }
       ],
       closing: "Bring Mangala home and honour the traditions that make every beginning meaningful."
+    },
+    "diwali-deepa": {
+      usps: ["3-piece festive set", "Save ₹51", "Free delivery"],
+      description: "Deepa gathers three familiar rituals for the glow of Diwali: rose incense sticks for a soft floral welcome, sandalwood dhoop cones for a grounding moment, and a havan cup for an auspicious beginning.",
+      bullets: ["Includes one pack each of Prema rose incense sticks, Dhara sandalwood dhoop cones and Mangala havan cups.", "₹549 bundle price, compared with ₹600 when purchased separately.", "A considered festive gift for the home, with free delivery across India."],
+      steps: [
+        { title: "Choose your moment", text: "Use the incense, dhoop or havan cup separately according to the instructions supplied with each product." },
+        { title: "Keep the space safe", text: "Use a suitable heat-resistant holder, ventilate the room and never leave burning items unattended." }
+      ],
+      closing: "Bring Deepa home and let familiar rituals gather around the light."
+    },
+    "diwali-shubha": {
+      usps: ["3-piece festive set", "Save ₹51", "Free delivery"],
+      description: "Shubha brings a joyful Diwali pairing of mogra incense sticks and jasmine dhoop cones, alongside a havan cup for a traditional home ritual. A ready-to-gift set for festive gatherings.",
+      bullets: ["Includes one pack each of Mallika mogra incense sticks, Prakriti jasmine dhoop cones and Mangala havan cups.", "₹549 bundle price, compared with ₹600 when purchased separately.", "A considered festive gift for the home, with free delivery across India."],
+      steps: [
+        { title: "Choose your moment", text: "Use the incense, dhoop or havan cup separately according to the instructions supplied with each product." },
+        { title: "Keep the space safe", text: "Use a suitable heat-resistant holder, ventilate the room and never leave burning items unattended." }
+      ],
+      closing: "Bring Shubha home and welcome the season with fragrance and warmth."
+    },
+    "diwali-samriddhi": {
+      usps: ["5 fragrances", "Save ₹101", "Free delivery"],
+      description: "Samriddhi brings all five Ruhani Room incense-stick fragrances together for Diwali: rose, mogra, sandalwood, lavender and jasmine. Share a complete scent collection with someone you love.",
+      bullets: ["Includes one pack each of Prema rose, Mallika mogra, Chandana sandalwood, Shanti lavender and Saurabha jasmine incense sticks.", "₹899 bundle price, compared with ₹1,000 when purchased separately.", "Five distinct fragrances in one festive gift, with free delivery across India."],
+      steps: [
+        { title: "Choose a fragrance", text: "Select rose, mogra, sandalwood, lavender or jasmine for the moment." },
+        { title: "Light with care", text: "Use a suitable heat-resistant holder, ventilate the room and never leave burning incense unattended." }
+      ],
+      closing: "Bring Samriddhi home and make room for every kind of quiet."
     }
   };
 
