@@ -1,0 +1,20 @@
+(function (root) {
+  "use strict";
+
+  var products = {
+    "sticks-rose": { name: "Prema Rose Incense Sticks", price: 200, image: "prema-rose-incense-sticks.webp", href: "/incense-sticks/prema-rose/", type: "Incense sticks", format: "sticks", scent: "rose", sanskrit: "Prema", sanskritNative: "", keyword: "rose incense sticks", alt: "Prema rose incense sticks by Ruhani Room in a brass holder" },
+    "sticks-mogra": { name: "Mallika Mogra Incense Sticks", price: 200, image: "mallika-mogra-incense-sticks.webp", href: "/incense-sticks/mallika-mogra/", type: "Incense sticks", format: "sticks", scent: "mogra", sanskrit: "Mallika", sanskritNative: "", keyword: "mogra agarbatti", alt: "Mallika mogra incense sticks by Ruhani Room" },
+    "sticks-sandalwood": { name: "Chandana Sandalwood Incense Sticks", price: 200, image: "chandana-sandalwood-incense-sticks.webp", href: "/incense-sticks/chandana-sandalwood/", type: "Incense sticks", format: "sticks", scent: "sandalwood", sanskrit: "Chandana", sanskritNative: "", keyword: "sandalwood incense sticks", alt: "Chandana sandalwood incense sticks by Ruhani Room" },
+    "sticks-lavender": { name: "Shanti Lavender Incense Sticks", price: 200, image: "shanti-lavender-incense-sticks.webp", href: "/incense-sticks/shanti-lavender/", type: "Incense sticks", format: "sticks", scent: "lavender", sanskrit: "Shanti", sanskritNative: "", keyword: "lavender incense sticks", alt: "Shanti lavender incense sticks by Ruhani Room" },
+    "sticks-jasmine": { name: "Saurabha Jasmine Incense Sticks", price: 200, image: "saurabha-jasmine-incense-sticks.webp", href: "/incense-sticks/saurabha-jasmine/", type: "Incense sticks", format: "sticks", scent: "jasmine", sanskrit: "Saurabha", sanskritNative: "", keyword: "jasmine incense sticks", alt: "Saurabha jasmine incense sticks by Ruhani Room" },
+    "cones-rose": { name: "Smriti Rose Dhoop Cones", price: 200, image: "smriti-rose-dhoop-cones.webp", href: "/dhoop-cones/smriti-rose/", type: "Dhoop cones", format: "cones", scent: "rose", sanskrit: "Smriti", sanskritNative: "स्मृति", keyword: "rose dhoop cones", alt: "Smriti rose dhoop cones by Ruhani Room" },
+    "cones-mogra": { name: "Kusuma Mogra Dhoop Cones", price: 200, image: "kusuma-mogra-dhoop-cones.webp", href: "/dhoop-cones/kusuma-mogra/", type: "Dhoop cones", format: "cones", scent: "mogra", sanskrit: "Kusuma", sanskritNative: "कुसुम", keyword: "mogra dhoop cones", alt: "Kusuma mogra dhoop cones by Ruhani Room" },
+    "cones-sandalwood": { name: "Dhara Sandalwood Dhoop Cones", price: 200, image: "dhara-sandalwood-dhoop-cones.webp", href: "/dhoop-cones/dhara-sandalwood/", type: "Dhoop cones", format: "cones", scent: "sandalwood", sanskrit: "Dhara", sanskritNative: "धारा", keyword: "sandalwood dhoop cones", alt: "Dhara sandalwood dhoop cones by Ruhani Room" },
+    "cones-lavender": { name: "Nivriti Lavender Dhoop Cones", price: 200, image: "nivriti-lavender-dhoop-cones.webp", href: "/dhoop-cones/nivriti-lavender/", type: "Dhoop cones", format: "cones", scent: "lavender", sanskrit: "Nivriti", sanskritNative: "निवृत्ति", keyword: "lavender dhoop cones", alt: "Nivriti lavender dhoop cones by Ruhani Room" },
+    "cones-jasmine": { name: "Prakriti Jasmine Dhoop Cones", price: 200, image: "prakriti-jasmine-dhoop-cones.webp", href: "/dhoop-cones/prakriti-jasmine/", type: "Dhoop cones", format: "cones", scent: "jasmine", sanskrit: "Prakriti", sanskritNative: "प्रकृति", keyword: "jasmine dhoop cones", alt: "Prakriti jasmine dhoop cones by Ruhani Room" },
+    "havan-classic": { name: "Mangala Havan Cups (pack of six)", price: 200, image: "mangala-havan-cups.webp", href: "/havan-cups/mangala/", type: "Havan cups", format: "havan", scent: "classic", sanskrit: "Mangala", sanskritNative: "मङ्गल", keyword: "havan cups", alt: "Mangala havan cups for puja by Ruhani Room" }
+  };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = products;
+  else root.RUHANI_PRODUCTS = products;
+}(typeof window !== "undefined" ? window : globalThis));

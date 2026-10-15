@@ -3,17 +3,17 @@
 var https = require("node:https");
 
 var CATALOG = {
-  "sticks-rose": { name: "Rose Incense Sticks", price: 200 },
-  "sticks-mogra": { name: "Mogra Incense Sticks", price: 200 },
-  "sticks-sandalwood": { name: "Sandalwood Incense Sticks", price: 200 },
-  "sticks-lavender": { name: "Lavender Incense Sticks", price: 200 },
-  "sticks-jasmine": { name: "Jasmine Incense Sticks", price: 200 },
-  "cones-rose": { name: "Rose Dhoop Cones", price: 200 },
-  "cones-mogra": { name: "Mogra Dhoop Cones", price: 200 },
-  "cones-sandalwood": { name: "Sandalwood Dhoop Cones", price: 200 },
-  "cones-lavender": { name: "Lavender Dhoop Cones", price: 200 },
-  "cones-jasmine": { name: "Jasmine Dhoop Cones", price: 200 },
-  "havan-classic": { name: "Havan Cups (pack of six)", price: 200 }
+  "sticks-rose": { name: "Prema Rose Incense Sticks", price: 200 },
+  "sticks-mogra": { name: "Mallika Mogra Incense Sticks", price: 200 },
+  "sticks-sandalwood": { name: "Chandana Sandalwood Incense Sticks", price: 200 },
+  "sticks-lavender": { name: "Shanti Lavender Incense Sticks", price: 200 },
+  "sticks-jasmine": { name: "Saurabha Jasmine Incense Sticks", price: 200 },
+  "cones-rose": { name: "Smriti Rose Dhoop Cones", price: 200 },
+  "cones-mogra": { name: "Kusuma Mogra Dhoop Cones", price: 200 },
+  "cones-sandalwood": { name: "Dhara Sandalwood Dhoop Cones", price: 200 },
+  "cones-lavender": { name: "Nivriti Lavender Dhoop Cones", price: 200 },
+  "cones-jasmine": { name: "Prakriti Jasmine Dhoop Cones", price: 200 },
+  "havan-classic": { name: "Mangala Havan Cups (pack of six)", price: 200 }
 };
 
 function sendJson(res, status, body) {

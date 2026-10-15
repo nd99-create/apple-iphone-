@@ -1,6 +1,125 @@
 {
+  "trailingSlash": true,
   "cleanUrls": false,
   "redirects": [
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "sticks" },
+        { "type": "query", "key": "f", "value": "rose" }
+      ],
+      "destination": "/incense-sticks/prema-rose/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "sticks" },
+        { "type": "query", "key": "f", "value": "mogra" }
+      ],
+      "destination": "/incense-sticks/mallika-mogra/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "sticks" },
+        { "type": "query", "key": "f", "value": "sandalwood" }
+      ],
+      "destination": "/incense-sticks/chandana-sandalwood/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "sticks" },
+        { "type": "query", "key": "f", "value": "lavender" }
+      ],
+      "destination": "/incense-sticks/shanti-lavender/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "sticks" },
+        { "type": "query", "key": "f", "value": "jasmine" }
+      ],
+      "destination": "/incense-sticks/saurabha-jasmine/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "cones" },
+        { "type": "query", "key": "f", "value": "rose" }
+      ],
+      "destination": "/dhoop-cones/smriti-rose/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "cones" },
+        { "type": "query", "key": "f", "value": "mogra" }
+      ],
+      "destination": "/dhoop-cones/kusuma-mogra/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "cones" },
+        { "type": "query", "key": "f", "value": "sandalwood" }
+      ],
+      "destination": "/dhoop-cones/dhara-sandalwood/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "cones" },
+        { "type": "query", "key": "f", "value": "lavender" }
+      ],
+      "destination": "/dhoop-cones/nivriti-lavender/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [
+        { "type": "query", "key": "type", "value": "cones" },
+        { "type": "query", "key": "f", "value": "jasmine" }
+      ],
+      "destination": "/dhoop-cones/prakriti-jasmine/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "destination": "/shop.html",
+      "permanent": true
+    },
+    {
+      "source": "/product-havan.html",
+      "destination": "/havan-cups/mangala/",
+      "permanent": true
+    },
+    {
+      "source": "/shop.html",
+      "has": [{ "type": "query", "key": "type", "value": "sticks" }],
+      "destination": "/incense-sticks/",
+      "permanent": true
+    },
+    {
+      "source": "/shop.html",
+      "has": [{ "type": "query", "key": "type", "value": "cones" }],
+      "destination": "/dhoop-cones/",
+      "permanent": true
+    },
+    {
+      "source": "/shop.html",
+      "has": [{ "type": "query", "key": "type", "value": "havan" }],
+      "destination": "/havan-cups/",
+      "permanent": true
+    },
     {
       "source": "/properties.html",
       "destination": "/shop.html",

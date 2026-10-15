@@ -6,34 +6,36 @@
   <title>Secure Checkout | Ruhani Room</title>
   <meta name="description" content="Enter your delivery details and check out securely with Ruhani Room.">
   <meta name="theme-color" content="#2b201a">
-  <link rel="icon" type="image/png" href="assets/images/brand/favicon.png">
+  <link rel="icon" type="image/png" href="/assets/images/brand/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/ruhani.css">
+  <link rel="stylesheet" href="/assets/css/ruhani.css">
+
+  <meta name="robots" content="noindex, follow">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="announce">Five classic Indian fragrances in incense sticks and dhoop cones</div>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Ruhani Room home"><img src="assets/images/brand/logo-horizontal-maroon.png" alt="Ruhani" width="931" height="297"></a>
+    <a class="brand" href="/" aria-label="Ruhani Room home"><img src="/assets/images/brand/logo-horizontal-maroon.png" alt="Ruhani" width="931" height="297"></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="index.html#fragrances">Fragrances</a>
-      <a href="index.html#ritual">Ritual</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">Home</a>
+      <a href="/shop.html">Shop</a>
+      <a href="/#fragrances">Fragrances</a>
+      <a href="/#ritual">Ritual</a>
+      <a href="/contact.html">Contact</a>
     </nav>
   </div>
 </header>
 <main id="main" class="checkout-page" data-checkout-page>
   <section class="page-head">
     <div class="wrap">
-      <p class="crumbs"><a href="index.html">Home</a> / <a href="cart.html">Basket</a> / Checkout</p>
+      <p class="crumbs"><a href="/">Home</a> / <a href="/cart.html">Basket</a> / Checkout</p>
       <p class="eyebrow">ALMOST HOME</p>
       <h1>Delivery, then a little ritual.</h1>
       <p class="lead">Share where to send your order. You’ll review the total before secure payment.</p>
@@ -84,7 +86,7 @@
           <button class="btn btn-solid btn-wide pay-button" type="submit" data-pay-button disabled>Loading secure checkout…</button>
           <button class="btn btn-line btn-wide" type="button" data-retry-verification hidden>Retry payment confirmation</button>
           <p class="order-reassurance">You’ll pay securely on Razorpay. Your card or UPI details are never stored on this site.</p>
-          <a class="text-link back-to-basket" href="cart.html">Back to your basket</a>
+          <a class="text-link back-to-basket" href="/cart.html">Back to your basket</a>
         </form>
         <aside class="order-card checkout-summary" aria-label="Order summary">
           <p class="eyebrow">YOUR ORDER</p>
@@ -101,7 +103,7 @@
         <h2>Your payment is confirmed.</h2>
           <p>We’ve securely verified your payment. Keep this payment reference for your records.</p>
         <p class="payment-reference">Payment reference <strong data-payment-reference></strong></p>
-        <a class="btn btn-solid" href="shop.html">Continue browsing</a>
+        <a class="btn btn-solid" href="/shop.html">Continue browsing</a>
       </section>
     </div>
   </section>
@@ -114,6 +116,7 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/main.js" defer></script>
+<script src="/assets/js/catalog.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
 </body>
 </html>

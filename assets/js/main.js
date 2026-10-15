@@ -43,7 +43,7 @@
   };
   var TYPES = {
     sticks: {
-      label: "Incense sticks", title: "Incense Sticks", main: "sticks.webp",
+      label: "Incense sticks", title: "Incense Sticks", main: "ruhani-room-incense-puja-hero.webp",
       mainAlt: "Ruhani Room incense sticks in five fragrances",
       about: "Long, slim sticks that release a steady trail of fragrance. Place one upright in a holder and let it scent the room while you go about your day.",
       use: "Daily fragrance, longer sessions, larger rooms"
@@ -56,19 +56,7 @@
     }
   };
   var STORE_KEY = "ruhani-room-basket-v1";
-  var PRODUCTS = {
-    "sticks-rose": { name: "Rose Incense Sticks", price: 200, image: "stick-rose.webp", href: "product.html?type=sticks&f=rose", type: "Incense sticks" },
-    "sticks-mogra": { name: "Mogra Incense Sticks", price: 200, image: "stick-mogra.webp", href: "product.html?type=sticks&f=mogra", type: "Incense sticks" },
-    "sticks-sandalwood": { name: "Sandalwood Incense Sticks", price: 200, image: "stick-sandalwood.webp", href: "product.html?type=sticks&f=sandalwood", type: "Incense sticks" },
-    "sticks-lavender": { name: "Lavender Incense Sticks", price: 200, image: "stick-lavender.webp", href: "product.html?type=sticks&f=lavender", type: "Incense sticks" },
-    "sticks-jasmine": { name: "Jasmine Incense Sticks", price: 200, image: "stick-jasmine.webp", href: "product.html?type=sticks&f=jasmine", type: "Incense sticks" },
-    "cones-rose": { name: "Rose Dhoop Cones", price: 200, image: "cone-rose.webp", href: "product.html?type=cones&f=rose", type: "Dhoop cones" },
-    "cones-mogra": { name: "Mogra Dhoop Cones", price: 200, image: "cone-mogra.webp", href: "product.html?type=cones&f=mogra", type: "Dhoop cones" },
-    "cones-sandalwood": { name: "Sandalwood Dhoop Cones", price: 200, image: "cone-sandalwood.webp", href: "product.html?type=cones&f=sandalwood", type: "Dhoop cones" },
-    "cones-lavender": { name: "Lavender Dhoop Cones", price: 200, image: "cone-lavender.webp", href: "product.html?type=cones&f=lavender", type: "Dhoop cones" },
-    "cones-jasmine": { name: "Jasmine Dhoop Cones", price: 200, image: "cone-jasmine.webp", href: "product.html?type=cones&f=jasmine", type: "Dhoop cones" },
-    "havan-classic": { name: "Havan Cups", price: 200, image: "havan.webp", href: "product-havan.html", type: "Pack of six cups" }
-  };
+  var PRODUCTS = window.RUHANI_PRODUCTS;
   var basket = {};
   var basketNotice = null;
   var money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
@@ -155,7 +143,7 @@
     if (!nav || !headerWrap || $(".basket-nav", headerWrap)) return;
     var link = document.createElement("a");
     link.className = "basket-nav";
-    link.href = "cart.html";
+    link.href = "/cart.html";
     link.setAttribute("aria-label", "Basket, 0 items");
     link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span class="basket-count" data-basket-count hidden>0</span>';
     headerWrap.appendChild(link);
@@ -180,13 +168,13 @@
       empty.appendChild(createText("h2", "", "Nothing here just yet."));
       empty.appendChild(createText("p", "", "Choose a fragrance and format to start building a little ritual of your own."));
       var shop = createText("a", "btn btn-solid", "Explore the collection");
-      shop.href = "shop.html";
+      shop.href = "/shop.html";
       empty.appendChild(shop);
       container.appendChild(empty);
       if (checkoutLink) {
         checkoutLink.setAttribute("aria-disabled", "true");
         checkoutLink.classList.add("is-disabled");
-        checkoutLink.href = "shop.html";
+        checkoutLink.href = "/shop.html";
         checkoutLink.textContent = "Choose something to begin";
       }
     } else {
@@ -238,7 +226,7 @@
       if (checkoutLink) {
         checkoutLink.removeAttribute("aria-disabled");
         checkoutLink.classList.remove("is-disabled");
-        checkoutLink.href = "checkout.html";
+        checkoutLink.href = "/checkout.html";
         checkoutLink.textContent = "Continue to checkout";
       }
     }
@@ -395,7 +383,7 @@
   }
 
   /* ---- Product page ---- */
-  if ($("[data-product-page]")) {
+  if ($("[data-product-page]") && !$("[data-static-product-page]")) {
     var type = TYPES[params.get("type")] ? params.get("type") : "sticks";
     var key = SCENTS[params.get("f")] ? params.get("f") : "rose";
     var s = SCENTS[key], t = TYPES[type];
@@ -413,21 +401,21 @@
     set("[data-pd-best]", s.best);
     set("[data-pd-use]", t.use);
     img("[data-pd-main]", t.main, t.mainAlt);
-    img("[data-pd-sub1]", "stick-" + key + ".webp", s.name + " incense sticks by Ruhani Room");
-    img("[data-pd-sub2]", "cone-" + key + ".webp", s.name + " dhoop cones by Ruhani Room");
+    img("[data-pd-sub1]", PRODUCTS["sticks-" + key].image, s.name + " incense sticks by Ruhani Room");
+    img("[data-pd-sub2]", PRODUCTS["cones-" + key].image, s.name + " dhoop cones by Ruhani Room");
 
     $$("[data-chip-type]").forEach(function (a) {
       var ty = a.dataset.chipType;
-      a.href = "product.html?type=" + ty + "&f=" + key;
+      a.href = PRODUCTS[ty + "-" + key].href;
       if (ty === type) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
     });
     $$("[data-chip-scent]").forEach(function (a) {
       var sc = a.dataset.chipScent;
-      a.href = "product.html?type=" + type + "&f=" + sc;
+      a.href = PRODUCTS[type + "-" + sc].href;
       if (sc === key) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
     });
     var enquire = $("[data-enquire]");
-    if (enquire) enquire.href = "contact.html?product=" + encodeURIComponent(title);
+    if (enquire) enquire.href = "/contact.html?product=" + encodeURIComponent(title);
     var addButton = $("[data-product-add]");
     if (addButton) {
       addButton.dataset.productAdd = type + "-" + key;
@@ -462,7 +450,7 @@
         empty.appendChild(createText("h2", "", "Your basket is empty."));
         empty.appendChild(createText("p", "", "Add a fragrance before entering delivery details."));
         var shopLink = createText("a", "btn btn-solid", "Browse the collection");
-        shopLink.href = "shop.html";
+        shopLink.href = "/shop.html";
         empty.appendChild(shopLink);
         checkoutSection.insertBefore(empty, checkoutForm);
       }

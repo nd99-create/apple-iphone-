@@ -1,2 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /cart.html
+Disallow: /checkout.html
+
+Sitemap: https://ruhani-room.vercel.app/sitemap.xml

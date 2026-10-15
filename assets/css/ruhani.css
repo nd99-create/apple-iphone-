@@ -295,9 +295,14 @@ dd { margin: 0; }
 .product .img:hover img { transform: scale(1.03); }
 .meta { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--ash); margin-bottom: 6px; }
 .swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex: none; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .14); }
-.product h3 { font-size: 1.5rem; margin-bottom: 6px; }
-.product h3 a { text-decoration: none; }
-.product h3 a:hover { color: var(--bronze-dk); }
+.product h2, .product h3 { font-size: 1.5rem; margin-bottom: 6px; }
+.product h2 a, .product h3 a { text-decoration: none; }
+.product h2 a:hover, .product h3 a:hover { color: var(--bronze-dk); }
+.product-sanskrit {
+  margin: 0 0 2px !important;
+  color: var(--bronze-dk) !important;
+  font: italic 1.05rem/1.2 var(--serif) !important;
+}
 .product p { color: var(--ash); font-size: .96rem; margin-bottom: 10px; }
 .product .row { font-size: .92rem; }
 .products-empty { grid-column: 1 / -1; color: var(--ash); }
@@ -308,6 +313,16 @@ dd { margin: 0; }
 .pd-gallery .main { grid-column: 1 / -1; width: 100%; aspect-ratio: 1063 / 1480; max-height: 72vh; object-fit: cover; border-radius: var(--arch); background: var(--sand); }
 .pd-gallery .sub { width: 100%; aspect-ratio: 1; object-fit: contain; background: var(--sand); border-radius: 6px; }
 .pd-info h1 { font-size: clamp(2.4rem, 4.6vw, 3.8rem); margin-bottom: .15em; }
+.product-usps { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px; }
+.product-usp { padding: 6px 12px; border: 1px solid var(--sand-dk); border-radius: 999px; color: var(--bronze-dk); font-size: .84rem; }
+.product-description { margin-top: 24px; }
+.product-bullets, .how-to-use ol, .pairs ul { display: grid; gap: 10px; padding-left: 22px; }
+.how-to-use, .pairs { margin-top: 32px; }
+.how-to-use h2, .pairs h2 { font-size: 1.8rem; }
+.product-closing { margin: 36px auto 20px; max-width: 38ch; text-align: center; font: italic 1.5rem/1.35 var(--serif); }
+.safety-note { color: var(--ash) !important; font-size: .84rem; }
+.category-copy { max-width: 68ch; margin-top: 64px; }
+.category-copy h2 { font-size: 2rem; }
 .pd-info > p:not(.note) { color: var(--ink); }
 .pd-info .btn { margin: 8px 0 8px; }
 .choice { margin: 24px 0; }
