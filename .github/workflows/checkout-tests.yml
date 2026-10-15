@@ -1,0 +1,65 @@
+name: Checkout integration tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Payment API tests (mocked)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run checkout tests without making real payments
+        run: node --test tests/razorpay.test.js
+
+  production-smoke:
+    name: Verify deployed Vercel checkout config
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for Vercel and verify checkout is enabled
+        env:
+          CHECKOUT_CONFIG_URL: https://ruhani-room.vercel.app/api/payment-config
+        run: |
+          node <<'NODE'
+          const url = process.env.CHECKOUT_CONFIG_URL;
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+          (async () => {
+            for (let attempt = 1; attempt <= 24; attempt += 1) {
+              try {
+                const response = await fetch(url, { cache: "no-store" });
+                if (response.ok) {
+                  const config = await response.json();
+                  if (config.enabled === true && typeof config.keyId === "string" && config.keyId.startsWith("rzp_")) {
+                    console.log("Vercel checkout configuration is enabled.");
+                    return;
+                  }
+                  throw new Error("Vercel checkout configuration is disabled or invalid.");
+                }
+              } catch (error) {
+                if (attempt === 24) throw error;
+              }
+              await sleep(5000);
+            }
+            throw new Error("Timed out waiting for the Vercel checkout deployment.");
+          })().catch((error) => {
+            console.error(error.message);
+            process.exitCode = 1;
+          });
+          NODE
